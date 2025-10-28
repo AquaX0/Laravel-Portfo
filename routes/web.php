@@ -17,9 +17,31 @@ Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create
 Route::post('/blog', [BlogController::class, 'store'])->name('blog.store');
 Route::get('/blog/{post}', [BlogController::class, 'show'])->name('blog.show');
 
+// Projects
+use App\Http\Controllers\ProjectController;
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
+Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+Route::get('/projects/{id}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
+Route::put('/projects/{id}', [ProjectController::class, 'update'])->name('projects.update');
+Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+
 Route::get('/contact', function () {
     return view('contact');
 });
+
+// Experience and Skills
+Route::get('/experience', [App\Http\Controllers\ExperienceController::class, 'index'])->name('experience.index');
+Route::get('/experience/create', [App\Http\Controllers\ExperienceController::class, 'create'])->name('experience.create');
+Route::post('/experience', [App\Http\Controllers\ExperienceController::class, 'store'])->name('experience.store');
+Route::get('/experience/{id}/edit', [App\Http\Controllers\ExperienceController::class, 'edit'])->name('experience.edit');
+Route::put('/experience/{id}', [App\Http\Controllers\ExperienceController::class, 'update'])->name('experience.update');
+
+Route::get('/skills', [App\Http\Controllers\SkillController::class, 'index'])->name('skills.index');
+Route::get('/skills/create', [App\Http\Controllers\SkillController::class, 'create'])->name('skills.create');
+Route::post('/skills', [App\Http\Controllers\SkillController::class, 'store'])->name('skills.store');
+Route::get('/skills/{id}/edit', [App\Http\Controllers\SkillController::class, 'edit'])->name('skills.edit');
+Route::put('/skills/{id}', [App\Http\Controllers\SkillController::class, 'update'])->name('skills.update');
 
 // Serve author image from resources/images without copying to public/
 Route::get('/images/author-image.jpg', function () {

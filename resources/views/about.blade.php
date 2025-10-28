@@ -37,14 +37,6 @@
                         </li>
                     </ul>
                 </div>
-                <div>
-                    <h3 class="text-xl font-semibold text-gray-900 mb-3">Skills</h3>
-                    <ul class="list-disc list-inside text-gray-700 space-y-1">
-                        <li>HTML</li>
-                        <li>Dart</li>
-                        <li>Python</li>
-                    </ul>
-                </div>
             </div>
         </div>
     </div>

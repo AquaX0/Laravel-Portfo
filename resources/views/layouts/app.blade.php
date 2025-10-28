@@ -8,11 +8,12 @@
 </head>
 <body class="min-h-screen bg-white font-sans text-gray-700">
     <div class="relative min-h-screen">
-        @include('partials.nav')
-
+        {{-- Place the page hero first so background/hero layers sit behind the nav --}}
         @yield('hero')
 
-        <main class="relative z-10 py-24">
+        @include('partials.nav')
+
+        <main class="relative z-0 min-h-screen py-24">
             @yield('content')
         </main>
     </div>

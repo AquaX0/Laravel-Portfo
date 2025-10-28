@@ -3,14 +3,14 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Blog;
+use App\Models\Project;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Blog>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Project>
  */
-class BlogFactory extends Factory
+class ProjectFactory extends Factory
 {
-    protected $model = Blog::class;
+    protected $model = Project::class;
 
     public function definition()
     {
