@@ -74,4 +74,13 @@ class BlogController extends Controller
     {
         return view('blog.show', compact('post'));
     }
+
+    /**
+     * Delete a blog post.
+     */
+    public function destroy(Blog $post)
+    {
+        $post->delete();
+        return redirect()->route('blog.index')->with('success', 'Blog post deleted.');
+    }
 }

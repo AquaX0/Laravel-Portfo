@@ -20,6 +20,11 @@
                 <p class="mt-2 text-gray-700">{{ $exp->description }}</p>
                 <div class="mt-3">
                     <a href="{{ route('experience.edit', $exp->id) }}" class="inline-block px-3 py-1 bg-gray-100 rounded">Edit</a>
+                    <form action="{{ route('experience.destroy', $exp->id) }}" method="post" class="inline-block ml-2" onsubmit="return confirm('Delete this experience?');">
+                        @csrf
+                        @method('DELETE')
+                        <button class="px-3 py-1 bg-red-100 text-red-700 rounded">Delete</button>
+                    </form>
                 </div>
             </div>
         @empty

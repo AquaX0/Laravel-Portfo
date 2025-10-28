@@ -20,7 +20,11 @@
                         <h3 class="font-semibold">{{ $s->name }}</h3>
                     </div>
                     <div>
-                        <a href="{{ route('skills.edit', $s->id) }}" class="inline-block px-3 py-1 bg-gray-100 rounded">Edit</a>
+                        <form action="{{ route('skills.destroy', $s->id) }}" method="post" class="inline-block ml-2" onsubmit="return confirm('Delete this skill?');">
+                            @csrf
+                            @method('DELETE')
+                            <button class="px-3 py-1 bg-red-100 text-red-700 rounded">Delete</button>
+                        </form>
                     </div>
                 </div>
             @empty

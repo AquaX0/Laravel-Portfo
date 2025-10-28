@@ -28,16 +28,24 @@
                             <img class="w-full h-56 object-cover" src="{{ url('/images/default-blog.png') }}" alt="{{ $item->title }}">
                         @endif
                     </a>
-                    <div class="p-6">
-                        <h2 class="text-2xl font-semibold mb-4">{{ $item->title }}</h2>
-                        <div class="flex items-center text-sm text-gray-500 font-medium space-x-4 mb-4">
-                            <span>{{ \Illuminate\Support\Carbon::parse($item->published_at)->format('M j, Y') }}</span>
+                        <div class="p-6">
+                            <h2 class="text-2xl font-semibold mb-4">{{ $item->title }}</h2>
+                            <div class="flex items-center text-sm text-gray-500 font-medium space-x-4 mb-4">
+                                <span>{{ \Illuminate\Support\Carbon::parse($item->published_at)->format('M j, Y') }}</span>
+                            </div>
+                            <div class="relative">
+                                <p class="text-gray-400 overflow-hidden max-h-24">{{ $item->excerpt }}</p>
+                                <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+                            </div>
+                            <div class="mt-3">
+                                <a href="{{ route('projects.edit', $item->id) }}" class="inline-block px-3 py-1 bg-gray-100 rounded">Edit</a>
+                                <form action="{{ route('projects.destroy', $item->id) }}" method="post" class="inline-block ml-2" onsubmit="return confirm('Delete this project?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="px-3 py-1 bg-red-100 text-red-700 rounded">Delete</button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="relative">
-                            <p class="text-gray-400 overflow-hidden max-h-24">{{ $item->excerpt }}</p>
-                            <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
-                        </div>
-                    </div>
                 </article>
             @empty
                 <div class="col-span-full text-center text-gray-500">No projects found.</div>

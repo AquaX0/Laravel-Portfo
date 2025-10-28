@@ -95,4 +95,11 @@ class ProjectController extends Controller
         $project->update($data);
         return redirect()->route('projects.show', $project)->with('success', 'Project updated.');
     }
+
+    public function destroy($id)
+    {
+        $project = Project::findOrFail($id);
+        $project->delete();
+        return redirect()->route('projects.index')->with('success', 'Project removed.');
+    }
 }

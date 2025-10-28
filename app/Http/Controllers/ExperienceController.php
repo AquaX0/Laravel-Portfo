@@ -49,4 +49,11 @@ class ExperienceController extends Controller
         $item->update($data);
         return redirect()->route('experience.index')->with('success', 'Experience updated.');
     }
+
+    public function destroy($id)
+    {
+        $item = Experience::findOrFail($id);
+        $item->delete();
+        return redirect()->route('experience.index')->with('success', 'Experience removed.');
+    }
 }

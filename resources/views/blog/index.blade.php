@@ -28,7 +28,14 @@
                         <h2 class="text-2xl font-semibold mb-4">{{ $post->title }}</h2>
                         <div class="flex items-center text-sm text-blue-600 font-medium space-x-4 mb-4">
                             <span>{{ \Illuminate\Support\Carbon::parse($post->published_at)->format('M j, Y') }}</span>
-                            <span>{{ $post->author }}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <a href="{{ route('blog.show', $post) }}" class="inline-block px-3 py-1 bg-gray-100 rounded">View</a>
+                            <form action="{{ route('blog.destroy', $post) }}" method="post" onsubmit="return confirm('Delete this post?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded">Delete</button>
+                            </form>
                         </div>
                         <div class="relative">
                             <p class="text-gray-400 overflow-hidden max-h-24">{{ $post->excerpt }}</p>

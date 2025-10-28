@@ -43,4 +43,11 @@ class SkillController extends Controller
         $item->update($data);
         return redirect()->route('skills.index')->with('success', 'Skill updated.');
     }
+
+    public function destroy($id)
+    {
+        $item = Skill::findOrFail($id);
+        $item->delete();
+        return redirect()->route('skills.index')->with('success', 'Skill removed.');
+    }
 }
