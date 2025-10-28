@@ -16,6 +16,8 @@ class Blog extends Model
         'body',
         'author',
         'published_at',
+        'image',
+        'image_mime',
     ];
 
     /**

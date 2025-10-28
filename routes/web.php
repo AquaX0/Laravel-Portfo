@@ -31,3 +31,14 @@ Route::get('/images/author-image.jpg', function () {
         'Content-Type' => 'image/jpeg'
     ]);
 });
+
+// Serve default blog image from resources/images
+Route::get('/images/default-blog.png', function () {
+    $path = resource_path('images/default-blog.png');
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    return response()->file($path, [
+        'Content-Type' => 'image/png'
+    ]);
+});

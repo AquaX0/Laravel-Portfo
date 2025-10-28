@@ -35,6 +35,7 @@ class BlogController extends Controller
             'body' => 'required|string',
             'author' => 'nullable|string|max:255',
             'published_at' => 'nullable|date',
+            'image' => 'nullable|file|image|max:2048',
         ]);
 
     // create an excerpt from body (auto-generated)
@@ -48,6 +49,18 @@ class BlogController extends Controller
             $slug = $base . '-' . $i++;
         }
         $data['slug'] = $slug;
+
+        // handle image upload or fallback to default file in resources/images
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $data['image'] = file_get_contents($file->getRealPath());
+            $data['image_mime'] = $file->getMimeType();
+        } else {
+            // don't store a default image in the DB; leave fields null and render the
+            // `resources/images/default-blog.png` at view time when needed
+            $data['image'] = null;
+            $data['image_mime'] = null;
+        }
 
         $post = Blog::create($data);
 
