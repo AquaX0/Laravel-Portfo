@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Tag;
 
 class Blog extends Model
 {
@@ -25,5 +26,13 @@ class Blog extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    /**
+     * The tags attached to the blog post.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

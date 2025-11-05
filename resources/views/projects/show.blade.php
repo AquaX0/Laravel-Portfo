@@ -38,6 +38,17 @@
       </div>
     @endif
 
+    @if($project->tags->isNotEmpty())
+      <div class="mb-6">
+        <h3 class="text-sm font-medium text-gray-700 mb-2">Tags</h3>
+        <div class="flex flex-wrap gap-2">
+          @foreach($project->tags as $tag)
+            <a href="{{ route('tags.show', $tag) }}" class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-700">{{ $tag->name }}</a>
+          @endforeach
+        </div>
+      </div>
+    @endif
+
     <div class="prose max-w-none">
       {!! nl2br(e($project->body)) !!}
     </div>

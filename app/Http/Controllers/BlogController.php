@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\Tag;
 use Illuminate\Support\Str;
 
 class BlogController extends Controller
@@ -13,7 +14,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $posts = Blog::orderBy('published_at', 'desc')->paginate(9);
+        $posts = Blog::with('tags')->orderBy('published_at', 'desc')->paginate(9);
         return view('blog.index', compact('posts'));
     }
 
@@ -22,7 +23,8 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blog.create');
+        $tags = Tag::orderBy('name')->get();
+        return view('blog.create', compact('tags'));
     }
 
     /**
@@ -36,6 +38,9 @@ class BlogController extends Controller
             'author' => 'nullable|string|max:255',
             'published_at' => 'nullable|date',
             'image' => 'nullable|file|image|max:2048',
+            'tags' => 'nullable|array',
+            'tags.*' => 'integer|exists:tags,id',
+            'new_tags' => 'nullable|string',
         ]);
 
     // create an excerpt from body (auto-generated)
@@ -64,6 +69,21 @@ class BlogController extends Controller
 
         $post = Blog::create($data);
 
+        // attach existing tags
+        if ($request->filled('tags')) {
+            $post->tags()->attach($request->input('tags'));
+        }
+
+        // create and attach new tags (comma-separated list)
+        if ($request->filled('new_tags')) {
+            $names = array_filter(array_map('trim', explode(',', $request->input('new_tags'))));
+            foreach ($names as $name) {
+                if ($name === '') continue;
+                $tag = Tag::firstOrCreate(['slug' => Str::slug($name)], ['name' => $name]);
+                $post->tags()->attach($tag->id);
+            }
+        }
+
         return redirect()->route('blog.show', $post)->with('success', 'Blog post created.');
     }
 
@@ -72,6 +92,7 @@ class BlogController extends Controller
      */
     public function show(Blog $post)
     {
+        $post->loadMissing('tags');
         return view('blog.show', compact('post'));
     }
 

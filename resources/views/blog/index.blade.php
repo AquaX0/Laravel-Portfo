@@ -29,8 +29,14 @@
                         <div class="flex items-center text-sm text-blue-600 font-medium space-x-4 mb-4">
                             <span>{{ \Illuminate\Support\Carbon::parse($post->published_at)->format('M j, Y') }}</span>
                         </div>
+                        @if($post->tags->isNotEmpty())
+                            <div class="mt-2 mb-3">
+                                @foreach($post->tags as $tag)
+                                    <a href="{{ route('tags.show', $tag) }}" class="inline-block text-xs bg-gray-100 px-2 py-1 rounded mr-2">{{ $tag->name }}</a>
+                                @endforeach
+                            </div>
+                        @endif
                         <div class="flex items-center space-x-2">
-                            <a href="{{ route('blog.show', $post) }}" class="inline-block px-3 py-1 bg-gray-100 rounded">View</a>
                             <form action="{{ route('blog.destroy', $post) }}" method="post" onsubmit="return confirm('Delete this post?');">
                                 @csrf
                                 @method('DELETE')

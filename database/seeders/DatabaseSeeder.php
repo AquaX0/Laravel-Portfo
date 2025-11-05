@@ -24,12 +24,14 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Seed blog posts (added by assistant)
-        $this->call(\Database\Seeders\BlogSeeder::class);
-        // Seed skills and experiences
-        $this->call(\Database\Seeders\SkillSeeder::class);
-        $this->call(\Database\Seeders\ExperienceSeeder::class);
-        // Seed projects
-        $this->call(\Database\Seeders\ProjectSeeder::class);
+    // Seed tags first so other seeders can attach them
+    $this->call(\Database\Seeders\TagSeeder::class);
+    // Seed skills and experiences
+    $this->call(\Database\Seeders\SkillSeeder::class);
+    $this->call(\Database\Seeders\ExperienceSeeder::class);
+    // Seed blog posts (added by assistant)
+    $this->call(\Database\Seeders\BlogSeeder::class);
+    // Seed projects
+    $this->call(\Database\Seeders\ProjectSeeder::class);
     }
 }

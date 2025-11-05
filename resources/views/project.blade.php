@@ -4,8 +4,8 @@
 
 @section('content')
     @php
-        // eager-load skills to avoid N+1
-        $items = \App\Models\Project::with('skills')->orderBy('published_at', 'desc')->get();
+        // eager-load skills and tags to avoid N+1
+        $items = \App\Models\Project::with(['skills','tags'])->orderBy('published_at', 'desc')->get();
     @endphp
 
     <div class="max-w-6xl mx-auto px-6">
@@ -38,6 +38,13 @@
                                 <div class="mt-2 flex flex-wrap gap-2">
                                     @foreach($item->skills as $skill)
                                         <span class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-700">{{ $skill->name }}</span>
+                                    @endforeach
+                                </div>
+                            @endif
+                            @if($item->tags->isNotEmpty())
+                                <div class="mt-2 flex flex-wrap gap-2">
+                                    @foreach($item->tags as $tag)
+                                        <a href="{{ route('tags.show', $tag) }}" class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-700">{{ $tag->name }}</a>
                                     @endforeach
                                 </div>
                             @endif

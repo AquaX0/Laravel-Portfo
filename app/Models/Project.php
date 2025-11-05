@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Skill;
+use App\Models\Tag;
 
 class Project extends Model
 {
@@ -27,5 +28,13 @@ class Project extends Model
     public function skills()
     {
         return $this->belongsToMany(Skill::class);
+    }
+
+    /**
+     * Tags attached to the project.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }

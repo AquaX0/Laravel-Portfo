@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\Blog;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\TagController;
 
 Route::get('/', function () {
     return view('home');
@@ -31,6 +32,9 @@ Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('pro
 Route::get('/contact', function () {
     return view('contact');
 });
+
+// Tags
+Route::get('/tags/{tag}', [TagController::class, 'show'])->name('tags.show');
 
 // Experience and Skills
 Route::get('/experience', [App\Http\Controllers\ExperienceController::class, 'index'])->name('experience.index');

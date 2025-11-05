@@ -19,6 +19,20 @@
         <form action="{{ route('blog.store') }}" method="post" enctype="multipart/form-data">
             @csrf
 
+            {{-- Tags selection --}}
+            <label class="block mb-2">Tags (choose existing)</label>
+            <div class="mb-3 flex flex-wrap gap-2">
+                @foreach($tags as $tag)
+                    <label class="inline-flex items-center bg-gray-100 px-2 py-1 rounded">
+                        <input type="checkbox" name="tags[]" value="{{ $tag->id }}" class="mr-2" {{ in_array($tag->id, old('tags', [])) ? 'checked' : '' }}>
+                        <span class="text-sm">{{ $tag->name }}</span>
+                    </label>
+                @endforeach
+            </div>
+
+            <label class="block mb-2">Or add new tags (comma-separated)</label>
+            <input name="new_tags" value="{{ old('new_tags') }}" placeholder="e.g. Laravel, API, Tutorial" class="w-full mb-3 px-3 py-2 border rounded" />
+
             <label class="block mb-2">Title</label>
             <input name="title" value="{{ old('title') }}" class="w-full mb-3 px-3 py-2 border rounded" required />
 
