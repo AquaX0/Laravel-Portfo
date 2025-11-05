@@ -4,7 +4,8 @@
 
 @section('content')
     @php
-        $items = \App\Models\Project::orderBy('published_at', 'desc')->get();
+        // eager-load skills to avoid N+1
+        $items = \App\Models\Project::with('skills')->orderBy('published_at', 'desc')->get();
     @endphp
 
     <div class="max-w-6xl mx-auto px-6">
@@ -33,6 +34,13 @@
                             <div class="flex items-center text-sm text-gray-500 font-medium space-x-4 mb-4">
                                 <span>{{ \Illuminate\Support\Carbon::parse($item->published_at)->format('M j, Y') }}</span>
                             </div>
+                            @if($item->skills->isNotEmpty())
+                                <div class="mt-2 flex flex-wrap gap-2">
+                                    @foreach($item->skills as $skill)
+                                        <span class="text-xs bg-gray-100 px-2 py-1 rounded text-gray-700">{{ $skill->name }}</span>
+                                    @endforeach
+                                </div>
+                            @endif
                             <div class="relative">
                                 <p class="text-gray-400 overflow-hidden max-h-24">{{ $item->excerpt }}</p>
                                 <div class="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>

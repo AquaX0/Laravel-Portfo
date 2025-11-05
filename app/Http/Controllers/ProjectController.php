@@ -15,6 +15,8 @@ class ProjectController extends Controller
 
     public function show(Project $project)
     {
+        // eager-load skills to avoid an extra query in the view
+        $project->loadMissing('skills');
         return view('projects.show', ['project' => $project]);
     }
 
